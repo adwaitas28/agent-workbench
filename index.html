@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agent Workbench</title>
+<meta name="description" content="Agent Up hands-on workshop: build your first AI agent, no code needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="config.js"></script>
+<style>
+/* Layout: one check-in card beside a short "what you'll build" column; stacks on phones. */
+:root{
+  --bg:#EEF2EE; --surface:#FBFCFA; --sunk:#E2E8E3; --ink:#16201B; --muted:#4D5C55; --line:#C9D3CC;
+  --accent:#1D6B57; --accent-ink:#F4FBF8; --marker:#F0C93A; --bad:#B3261E;
+  --display:'Bricolage Grotesque', 'Trebuchet MS', sans-serif;
+  --body:'Atkinson Hyperlegible', Verdana, sans-serif;
+  --mono:'IBM Plex Mono', 'Courier New', monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#101613; --surface:#18201C; --sunk:#0B100D; --ink:#E5ECE8; --muted:#A3B3AB; --line:#2E3A34;
+  --accent:#62C7A7; --accent-ink:#0B1A15; --marker:#E9C64A; --bad:#F2867E; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-inline:20px;padding-block:calc(48px + env(safe-area-inset-top,0px)) calc(48px + env(safe-area-inset-bottom,0px))}
+h1,h2{font-family:var(--display);line-height:1.08;margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:center}
+.intro{display:flex;flex-direction:column;gap:22px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-.02em}
+h1 mark{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit;padding:0 4px}
+.lede{font-size:20px;color:var(--muted);max-width:52ch}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:baseline}
+.steps .n{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:20px;box-shadow:0 18px 40px -24px rgba(22,32,27,.35)}
+.card h2{font-size:28px;font-weight:700}
+label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px}
+label .hint{font-weight:400;color:var(--muted);font-size:14px}
+input{font-family:var(--body);font-size:17px;color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:12px 14px;width:100%}
+input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+input[aria-invalid="true"]{border-color:var(--bad)}
+.err{color:var(--bad);font-size:14px;min-height:1.2em}
+button{font-family:var(--body);font-weight:700;font-size:17px;border-radius:12px;padding:14px 20px;cursor:pointer;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button:disabled{opacity:.6;cursor:wait}
+button.ghost{background:transparent;color:var(--ink);border-color:var(--line);font-weight:400;font-size:15px;padding:10px 16px}
+.privacy{font-size:13px;color:var(--muted)}
+.back{display:flex;flex-direction:column;gap:10px;background:var(--sunk);border-radius:12px;padding:16px}
+@media (max-width:820px){.wrap{grid-template-columns:minmax(0,1fr);gap:36px}.card{padding:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="intro">
+    <p class="eyebrow" id="eventLine">Agent Up · Hands-on workshop</p>
+    <h1>Build your first <mark>AI agent</mark></h1>
+    <p class="lede">In 90 minutes you'll turn a plain chatbot into an event-planning agent called Pip, one building block at a time. No code needed.</p>
+    <ol class="steps">
+      <li><span class="n">01</span><span>Write prompts that get better answers</span></li>
+      <li><span class="n">02</span><span>Give your agent a job description</span></li>
+      <li><span class="n">03</span><span>Teach it a reusable skill</span></li>
+      <li><span class="n">04</span><span>Let it use tools</span></li>
+      <li><span class="n">05</span><span>Try to break it</span></li>
+    </ol>
+  </section>
+
+  <form class="card" id="form" novalidate>
+    <h2>Check in</h2>
+    <div class="back" id="back" hidden>
+      <p>Welcome back, <b id="backName"></b>.</p>
+      <button type="button" class="ghost" id="continueBtn">Continue to the workshop</button>
+    </div>
+    <label for="name">Your name
+      <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="e.g. Priya Sharma">
+    </label>
+    <label for="position">Your position <span class="hint">We'll suggest agent ideas for your role.</span>
+      <input id="position" name="position" type="text" autocomplete="organization-title" maxlength="80" required placeholder="e.g. Marketing Manager" list="roles">
+      <datalist id="roles">
+        <option value="Marketing Manager"><option value="Sales Executive"><option value="HR Business Partner">
+        <option value="Software Engineer"><option value="Product Manager"><option value="Designer">
+        <option value="Finance Analyst"><option value="Teacher"><option value="Founder"><option value="Student">
+      </datalist>
+    </label>
+    <p class="err" id="err" role="alert"></p>
+    <button type="submit" id="go">Start the workshop</button>
+    <p class="privacy" id="privacy">Your details stay in this browser and are used to personalise the workshop.</p>
+  </form>
+</div>
+
+<script>
+(() => {
+  const cfg = window.AW_CONFIG || {};
+  const $ = id => document.getElementById(id);
+  const KEY = "aw-profile";
+  const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){ return null; } };
+  const save = p => { try { localStorage.setItem(KEY, JSON.stringify(p)); return true; } catch(e){ return false; } };
+
+  if (cfg.eventName) $("eventLine").textContent = cfg.eventName + " · Hands-on workshop";
+  if (cfg.sheetUrl) $("privacy").textContent = "Your name and position are shared with the workshop host and used to personalise the workshop.";
+
+  const existing = read();
+  const editing = new URLSearchParams(location.search).has("edit");
+  if (existing && existing.name){
+    $("name").value = existing.name; $("position").value = existing.position || "";
+    if (!editing){ $("back").hidden = false; $("backName").textContent = existing.name; }
+  }
+  $("continueBtn").addEventListener("click", () => location.href = "workshop.html");
+
+  function send(profile){
+    if (!cfg.sheetUrl) return Promise.resolve();
+    const post = fetch(cfg.sheetUrl, {
+      method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ name: profile.name, position: profile.position, event: cfg.eventName || "" })
+    }).catch(() => {});
+    return Promise.race([post, new Promise(r => setTimeout(r, 3000))]);
+  }
+
+  $("form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = $("name").value.trim().replace(/\s+/g, " ");
+    const position = $("position").value.trim().replace(/\s+/g, " ");
+    $("name").setAttribute("aria-invalid", name ? "false" : "true");
+    $("position").setAttribute("aria-invalid", position ? "false" : "true");
+    if (!name || !position){
+      $("err").textContent = !name ? "Please enter your name." : "Please enter your position.";
+      (!name ? $("name") : $("position")).focus(); return;
+    }
+    $("err").textContent = "";
+    const profile = { name, position, at: new Date().toISOString() };
+    if (!save(profile)){ $("err").textContent = "Your browser is blocking saved data, so the workshop can't remember you. Turn off private browsing and try again."; return; }
+    $("go").disabled = true; $("go").textContent = "Starting…";
+    await send(profile);
+    location.href = "workshop.html";
+  });
+})();
+</script>
+</body>
+</html>
