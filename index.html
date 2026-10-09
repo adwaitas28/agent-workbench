@@ -12,7 +12,7 @@
 /* Layout: one check-in card beside a short "what you'll build" column; stacks on phones. */
 :root{
   --bg:#EEF2EE; --surface:#FBFCFA; --sunk:#E2E8E3; --ink:#16201B; --muted:#4D5C55; --line:#C9D3CC;
-  --accent:#1D6B57; --accent-ink:#F4FBF8; --marker:#F0C93A; --bad:#B3261E;
+  --accent:#1D6B57; --accent-ink:#F4FBF8; --marker:#3FA585; --bad:#B3261E;
   --display:'Bricolage Grotesque', 'Trebuchet MS', sans-serif;
   --body:'Atkinson Hyperlegible', Verdana, sans-serif;
   --mono:'IBM Plex Mono', 'Courier New', monospace;
@@ -20,19 +20,19 @@
 }
 @media (prefers-color-scheme: dark){:root{
   --bg:#101613; --surface:#18201C; --sunk:#0B100D; --ink:#E5ECE8; --muted:#A3B3AB; --line:#2E3A34;
-  --accent:#62C7A7; --accent-ink:#0B1A15; --marker:#E9C64A; --bad:#F2867E; color-scheme:dark}}
+  --accent:#62C7A7; --accent-ink:#0B1A15; --marker:#62C7A7; --bad:#F2867E; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{min-height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
   padding-inline:20px;padding-block:calc(48px + env(safe-area-inset-top,0px)) calc(48px + env(safe-area-inset-bottom,0px))}
 h1,h2{font-family:var(--display);line-height:1.08;margin:0;text-wrap:balance}
 p{margin:0}
-:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:center}
 .intro{display:flex;flex-direction:column;gap:22px}
 .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 h1{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-.02em}
-h1 mark{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit;padding:0 4px}
+h1 mark{background:none;color:var(--accent);padding:0}
 .lede{font-size:20px;color:var(--muted);max-width:52ch}
 .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .steps li{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:baseline}
@@ -58,7 +58,7 @@ button.ghost{background:transparent;color:var(--ink);border-color:var(--line);fo
   <section class="intro">
     <p class="eyebrow" id="eventLine">Agent Up · Hands-on workshop</p>
     <h1>Build your first <mark>AI agent</mark></h1>
-    <p class="lede">In 90 minutes you'll turn a plain chatbot into an event-planning agent called Pip, one building block at a time. No code needed.</p>
+    <p class="lede">In 90 minutes you'll turn a plain chatbot into an event-planning agent called Scout, one building block at a time. No code needed.</p>
     <ol class="steps">
       <li><span class="n">01</span><span>Write prompts that get better answers</span></li>
       <li><span class="n">02</span><span>Give your agent a job description</span></li>

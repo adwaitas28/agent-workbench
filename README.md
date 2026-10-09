@@ -1,8 +1,8 @@
 # Agent Workbench
 
-A hands-on, no-code workshop for the Agent Up conference. Attendees check in with their name and position, then build "Pip", an event-planning AI agent, across five exercises: prompts, a job description, a skill, tools, and guardrails.
+A hands-on, no-code workshop for the Agent Up conference. Attendees check in with their name and position, then build "Scout", an event-planning AI agent, across five exercises: prompts, a job description, a skill, tools, and guardrails.
 
-All of Pip's answers are **simulated by scripted rules in the page**. No AI model, API key or account is needed, and nothing costs money. The answers still react to what attendees type, so editing a rule or a budget changes the result.
+All of Scout's answers are **simulated by scripted rules in the page**. No AI model, API key or account is needed, and nothing costs money. The answers still react to what attendees type, so editing a rule or a budget changes the result.
 
 ## Files
 
@@ -38,7 +38,7 @@ Note: anyone who has the web app URL can add rows, so keep the sheet for attenda
 ## Before the workshop
 
 - Check in once yourself and click through all five exercises.
-- Exercise 2: delete the "Never book" rule and run the request to see Pip slip, then use **Restore rules**.
+- Exercise 2: delete the "Never book" rule and run the request to see Scout slip, then use **Restore rules**.
 - Exercise 5: try each tricky request with and without the matching rule.
 - The venue and calendar data is made up for practice. Edit `VENUES` and `CALENDAR` near the top of the script in `workshop.html` to change it.
 
